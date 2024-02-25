@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Choose Doctor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        header {
+            background-color: #34dbae;
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+            font-size: 28px;
+        }
+
+        .image-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .doctor-card {
+            margin: 20px;
+            padding: 4px;
+            background-color: #c4c3c36a;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        img {
+            width: 200px;
+            height: 250px;
+            border-radius: 10px;
+            object-fit: cover;
+            margin-bottom: 10px;
+        }
+
+        p {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        Choose Doctor
+    </header>
+    <div class="image-container" id="imageContainer"></div>
+
+    <script>
+        // Sample JSON data with image URLs
+        const imageData = [
+        { "image": "https://images.pexels.com/photos/19218034/pexels-photo-19218034/free-photo-of-smiling-doctor-in-a-lab-coat-and-with-a-stethoscope.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" },
+            { "image": "https://images.pexels.com/photos/8942093/pexels-photo-8942093.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" },
+           
+            { "image": "https://images.pexels.com/photos/5998465/pexels-photo-5998465.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" },
+            { "image": "https://media.istockphoto.com/id/1222617754/photo/male-doctor-stock-photo.jpg?s=1024x1024&w=is&k=20&c=GpQiGKfzzQQv7jELHZDD1y7dxi95XdOhwslktWwpjCg=" },
+            { "image": "https://img.freepik.com/free-photo/smiling-doctor-with-strethoscope-isolated-grey_651396-974.jpg?w=1060&t=st=1708839056~exp=1708839656~hmac=1d1ecae70843a97000c5c340f06e4033ddb047b878859ad07a7dd701c14f97da" },
+            { "image": "https://img.freepik.com/free-photo/young-handsome-physician-medical-robe-with-stethoscope_1303-17828.jpg?w=826&t=st=1708839094~exp=1708839694~hmac=7c309960393ca55633eed573f65478d2aa49508089cd63ab8578a77da11204a5" },
+            { "image": "https://img.freepik.com/premium-photo/medical-concept-indian-beautiful-female-doctor-white-coat-with-stethoscope-waist-up-medical-student-woman-hospital-worker-looking-camera-smiling-studio-blue-background_185696-621.jpg?size=626&ext=jpg&ga=GA1.1.600381407.1708839052&semt=ais" },
+            { "image": "https://img.freepik.com/free-photo/young-handsome-doctor-wearing-white-medical-gown-white-medical-gloves-stethoscope-smiling-standing-white-wall_141793-30687.jpg?size=626&ext=jpg&ga=GA1.1.600381407.1708839052&semt=ais" },
+            { "image": "https://img.freepik.com/free-photo/young-woman-doctor-white-coat-with-stethoscope-smiling-confident-standing-with-arms-crossed-white-wall_141793-47701.jpg?size=626&ext=jpg&ga=GA1.1.600381407.1708839052&semt=ais" },
+            { "image": "https://img.freepik.com/free-photo/pleased-young-female-doctor-wearing-medical-robe-stethoscope-around-neck-standing-with-closed-posture_409827-254.jpg?size=626&ext=jpg&ga=GA1.1.600381407.1708839052&semt=ais" },
+            { "image": "https://img.freepik.com/premium-photo/young-woman-with-documents-woman-bathrobe_179935-2677.jpg?size=626&ext=jpg&ga=GA1.1.600381407.1708839052&semt=ais" },
+            { "image": "https://img.freepik.com/free-photo/doctor-examines-patient-medicine-health-care-concept_1328-3146.jpg?size=626&ext=jpg&ga=GA1.1.600381407.1708839052&semt=ais" },
+            { "image": "https://img.freepik.com/free-photo/doctors-day-handsome-brunette-cute-guy-medical-gown-with-crossed-hands_140725-162942.jpg?size=626&ext=jpg&ga=GA1.1.600381407.1708839052&semt=ais" },
+            { "image": "https://img.freepik.com/free-photo/young-woman-doctor-white-coat-with-phonendoscope-standing-with-big-smile-looking-camera-isolated-blue-background_141793-9841.jpg?size=626&ext=jpg&ga=GA1.1.600381407.1708839052&semt=ais" },
+            { "image": "https://img.freepik.com/free-photo/young-man-doctor-wearing-white-coat-stethoscope-looking-confident-with-crossed-arms_141793-12596.jpg?size=626&ext=jpg&ga=GA1.1.600381407.1708839052&semt=ais" },
+            { "image": "https://img.freepik.com/free-photo/doctor-with-his-arms-crossed-white-background_1368-5789.jpg?t=st=1708839466~exp=1708840066~hmac=6e3f3b96cc2a678b1bd20d454f1c7a98e76a791f6708fc941fc54861f4b1e18c" },
+            { "image": "https://img.freepik.com/free-photo/portrait-beautiful-brunette-nurse-isolated-black_171337-5769.jpg?size=626&ext=jpg&ga=GA1.1.600381407.1708839052&semt=ais" },
+            { "image": "https://img.freepik.com/free-photo/cheerful-doctor-making-notes-looking-away_23-2147896151.jpg?t=st=1708839492~exp=1708840092~hmac=9ab51087676965b8afec32a573ed461a4b69a4c2f5bd0b5cd8c7cd099c90f6e8" },
+            { "image": "https://img.freepik.com/free-photo/female-doctor-lab-coat-white-isolated-confident-smile_343596-6556.jpg?size=626&ext=jpg&ga=GA1.1.600381407.1708839052&semt=ais" },
+            { "image": "https://img.freepik.com/free-photo/serious-confident-lady-with-clipboard-looking_171337-5785.jpg?size=626&ext=jpg&ga=GA1.1.600381407.1708839052&semt=ais" },
+            { "image": "https://img.freepik.com/free-photo/medium-shot-doctor-with-stethoscope_23-2148816188.jpg?size=626&ext=jpg&ga=GA1.1.600381407.1708839052&semt=ais" },
+            { "image": "https://img.freepik.com/free-photo/happy-young-male-doctor-using-tablet-computer_1262-18254.jpg?size=626&ext=jpg&ga=GA1.1.600381407.1708839052&semt=ais" },
+            { "image": "https://img.freepik.com/free-photo/young-female-doctor-sitting-with-crossed-hands_23-2148396637.jpg?size=626&ext=jpg&ga=GA1.1.600381407.1708839052&semt=ais" },
+            { "image": "https://img.freepik.com/premium-photo/portrait-cheerful-smiling-young-doctor-with-stethoscope-neck-medical-coat_255757-1411.jpg?size=626&ext=jpg&ga=GA1.1.600381407.1708839052&semt=ais" },
+            { "image": "https://img.freepik.com/free-photo/woman-doctor-wearing-lab-coat-with-stethoscope-isolated_1303-29791.jpg?size=626&ext=jpg&ga=GA1.1.600381407.1708839052&semt=ais" }
+
+        ];
+
+        // Function to load images and names
+        function loadImages() {
+            const container = document.getElementById('imageContainer');
+
+            imageData.forEach((doctor, index) => {
+                const doctorCard = document.createElement('div');
+                doctorCard.className = 'doctor-card';
+
+                const image = document.createElement('img');
+                image.src = doctor.image;
+                image.alt = `Doctor ${index + 1}`;
+
+                const nameParagraph = document.createElement('p');
+                nameParagraph.textContent = `Doctor ${index + 1}`;
+
+                doctorCard.appendChild(image);
+                doctorCard.appendChild(nameParagraph);
+                container.appendChild(doctorCard);
+            });
+        }
+
+        // Call the function to load images when the page is loaded
+        window.addEventListener('load', loadImages);
+    </script>
+</body>
+</html>
